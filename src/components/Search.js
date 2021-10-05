@@ -3,9 +3,21 @@ import axios from "axios";
 
 const Search = () => {
   const [term, setTerm] = useState("programming");
+  const [debouncedTerm, setDebouncedTerm] = useState(term);
   const [results, setResults] = useState([]);
 
   useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedTerm(term);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [term]);
+
+  useEffect(() => {
+    //ONLY RUNS THIS SEARCH WHEN DEBOUNCE TERM CHANGES(and initial render)
     async function fetchData() {
       const { data } = await axios.get("https://en.wikipedia.org/w/api.php", {
         params: {
@@ -13,15 +25,13 @@ const Search = () => {
           list: "search",
           origin: "*",
           format: "json",
-          srsearch: term,
+          srsearch: debouncedTerm,
         },
       });
       setResults(data.query.search);
     }
-    if (term) {
-      fetchData();
-    }
-  }, [term]);
+    fetchData();
+  }, [debouncedTerm]);
 
   const renderedResults = results.map(({ title, snippet, pageid }) => {
     return (
@@ -36,7 +46,10 @@ const Search = () => {
         </div>
         <div className="content">
           <div className="header">{title}</div>
-          {snippet.replaceAll(/<span class="searchmatch">|<\/?span>/g, "")}
+          {snippet.replaceAll(
+            /<span class="searchmatch">|<\/?span>|&quot;/g,
+            ""
+          )}
         </div>
       </div>
     );
