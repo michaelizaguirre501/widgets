@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Accordion from "./Accordion";
 import Search from "./Search";
 import Dropdown from "./Dropdown";
@@ -17,17 +17,23 @@ const items = [
   },
 ];
 const options = [
-  { label: "The Color Red", value: "red" },
-  { label: "The Color Green", value: "green" },
-  { label: "A Shade Of Blue", value: "blue" },
+  { label: "Really Red", value: "red" },
+  { label: "Money Green", value: "green" },
+  { label: "Blue Skies", value: "blue" },
 ];
 
 const App = () => {
+  const [selected, setSelected] = useState(options[0]);
   return (
     <div>
       {/* <Accordion items={items} />
       <Search /> */}
-      <Dropdown options={options} />
+      <Dropdown
+        options={options}
+        selected={selected}
+        onSelectChange={setSelected}
+        whatFor={"Color"}
+      />
     </div>
   );
 };
