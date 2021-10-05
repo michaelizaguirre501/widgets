@@ -25,20 +25,10 @@ const options = [
 
 const App = () => {
   const [selected, setSelected] = useState(options[0]);
-  const [ok, setOK] = useState(true);
+
   return (
     <div>
-      <button onClick={() => setOK(!ok)}>show</button>
-      {/* <Accordion items={items} />
-      <Search /> */}
-      {ok ? (
-        <Dropdown
-          options={options}
-          selected={selected}
-          onSelectChange={setSelected}
-          whatFor={"Color"}
-        />
-      ) : null}
+      <Translate />
     </div>
   );
 };
