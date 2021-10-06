@@ -3,6 +3,8 @@ import Accordion from "./Accordion";
 import Search from "./Search";
 import Dropdown from "./Dropdown";
 import Translate from "./Translate";
+import Route from "./Route";
+import Navbar from "./Navbar";
 const items = [
   {
     title: "What is React",
@@ -28,7 +30,24 @@ const App = () => {
 
   return (
     <div>
-      <Translate />
+      <Navbar />
+      <Route path={"/"}>
+        <Accordion items={items} />
+      </Route>
+      <Route path={"/search"}>
+        <Search />
+      </Route>
+      <Route path={"/translate"}>
+        <Translate />
+      </Route>
+      <Route path={"/dropdown"}>
+        <Dropdown
+          options={options}
+          whatFor={"colors"}
+          selected={selected}
+          onSelectChange={setSelected}
+        />
+      </Route>
     </div>
   );
 };
