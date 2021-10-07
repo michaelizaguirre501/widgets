@@ -35,7 +35,11 @@ const Search = () => {
 
   const renderedResults = results.map(({ title, snippet, pageid }) => {
     return (
-      <div key={pageid} className="item">
+      <div
+        key={pageid}
+        style={{ width: "80%", margin: "0 auto" }}
+        className="item"
+      >
         <div className="right floated content">
           <a
             href={`https://en.wikipedia.org?curid=${pageid}`}
